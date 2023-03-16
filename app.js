@@ -65,8 +65,20 @@ const deleteProduct = (req, res) => {
     }
 };
 
+const findProductById = (req, res) => {
+    const { id } = req.params;
+    const product = products.find(p => p.id == id);
+
+    if (!product) {
+        return res.status(404).json({ message: `Producto con ID ${id} no encontrado` });
+    }
+
+    res.json(product);
+};
 
 app.get("/api/v1/products", findAllProducts);
+
+app.get("/api/v1/products/:id", findProductById);
 
 app.post("/api/v1/products", createProduct);
 
